@@ -17,4 +17,4 @@ Project 2:
 	.\main.exe -p 2 -f "net.txt" -a 0.15
 
 Project 3:
-	.\main.exe -p 3 -f ""
+	.\main.exe -p 3 -f "generated/graph_1.txt"
