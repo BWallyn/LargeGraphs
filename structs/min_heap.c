@@ -3,6 +3,14 @@
 
 #include "min_heap.h"
 
+/*
+
+Cette version est une Min Heap pondérée par des poids.
+Pour retrouver facilement un élement dans la min Heap et changer sa valeur, 
+la liste to_index garde l'indice de chaque élement.
+
+*/
+
 Heap *CreateHeap(unsigned long capacity, long int *weigths){
     Heap *h = (Heap * ) malloc(sizeof(Heap)); //one is number of heap
 

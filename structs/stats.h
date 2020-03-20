@@ -14,6 +14,9 @@ typedef struct
 	unsigned long *five_most_popular_pages;
 	unsigned long *five_last_popular_pages;
 	long int k_core_value;
+
+	//tp3
+	long int nb_communities;
 } STATS;
 
 void initSTATS(STATS *s);

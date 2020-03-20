@@ -49,6 +49,7 @@ int main(int argc,char** argv){
 
 
 	STATS s;
+	initSTATS(&s);
 	//====================== PROJET 1 ======================
 
 	if (options.project == 1){
@@ -95,7 +96,7 @@ int main(int argc,char** argv){
 	if (options.project == 3){
 		unsigned long n_nodes=400;
 		double p=0.1;
-		double q=0.03;
+		double q=0.01;
 		char* input="instances/generated/graph_1.txt";
 		printf("\nBEGIN Generate graph\n");
 		t1 = time(NULL);

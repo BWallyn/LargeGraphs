@@ -14,6 +14,8 @@ void initSTATS(STATS* s){
 	s->five_last_popular_pages = calloc(5,sizeof(unsigned long));
 
 	s->k_core_value = 0;
+
+	s->nb_communities = 0;
 }
 
 void showSTATS(STATS* s, OPTIONS* options){
@@ -38,6 +40,10 @@ void showSTATS(STATS* s, OPTIONS* options){
 
 		printf("\nk-core value du graph : %d\n", s->k_core_value);
 
+	}
+
+	if (options->project == 3){
+		printf("Nombre de communautes: %d\n", s->nb_communities);
 	}
 	
 	printf("-------------------------------------\n");
