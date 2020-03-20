@@ -12,10 +12,9 @@
 void computeLabelPropagation(adjlist *g, STATS *s){
 
     unsigned long i, u, n1, n2, ln1, ln2;
-    unsigned long maximum, index;
+    unsigned long maximum, index, index_label;
     bool node_wtht_highest_freq=true;
 
-    printf("Before calloc\n");
     unsigned long *labels = calloc(g->n, sizeof(unsigned long));
     unsigned long *n_labels  = calloc(g->n, sizeof(unsigned long));
     
@@ -41,13 +40,11 @@ void computeLabelPropagation(adjlist *g, STATS *s){
         node_wtht_highest_freq = false;
         // Set the label with the highest frequency among the neighbours
         for(i=0; i<g->n; ++i){
-            printf("node number: %lu\n", i);
-            printf("Before calloc\n");
             n_labels = calloc(g->n, sizeof(unsigned long));
 
-            printf("Update neighbours count labels\n");
             for(u=g->cd[i]; u<g->cd[i+1]; ++u){
-                n_labels[u] = n_labels[u] + 1;
+                index_label = labels[g->adj[u]];
+                n_labels[index_label] = n_labels[index_label] + 1;
             }
 
             // Find the maximum
@@ -55,7 +52,7 @@ void computeLabelPropagation(adjlist *g, STATS *s){
             index = 0;
             for(u=1; u<g->n; ++u){
                 if(n_labels[u] > maximum){
-                    printf("Replace max\n");
+                    printf("Update max by node %lu\n", u);
                     maximum = n_labels[u];
                     index = u;
                 }
@@ -64,16 +61,14 @@ void computeLabelPropagation(adjlist *g, STATS *s){
             // Change the label of the current node if needed
             if(labels[i] != labels[index]){
                 printf("Replace label of node %lu (%lu) by label of node %lu (%lu)\n", i, labels[i], index, labels[index]);
-                printf("number of nodes: %lu\n", g->n);
                 labels[i] = labels[index];
                 node_wtht_highest_freq = true;
             }
-            printf("Before free n_labels\n");
             free(n_labels);
-            printf("After free n_labels\n");
         }
-        printf("Labels set\n");
     }
+    printf("\n");
+    for(i=0; i<g->n; ++i) printf("%lu ", labels[i]);
 };
 
 #endif
