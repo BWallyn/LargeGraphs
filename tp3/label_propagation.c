@@ -78,16 +78,16 @@ void computeLabelPropagation(adjlist *g, STATS *s){
     bool node_wtht_highest_freq=true;
 
     unsigned long *labels = calloc(g->n, sizeof(unsigned long));
-    unsigned long *order = calloc(g->n, sizeof(unsigned long)); // au début identité puis va etre suffled
+    unsigned long *order = calloc(g->n, sizeof(unsigned long)); // first identity then shuffled
     unsigned long *nb_labels = calloc(g->n, sizeof(unsigned long)); // permet de savoir quels labels ont déjà été vu dans chaque voisinage + de les compter
 
-    // Assgin unique label to each node
+    // Assign unique label to each node
     for(i=0; i<g->n; ++i){
         labels[i] = i;
         order[i] = i;
     }
 
-    // Recherche du degré maximal
+    // Search max degree
     unsigned long max_degree = 0;
     for (i=0; i<g->n; ++i){
         if (g->cd[i+1]-g->cd[i] > max_degree){
@@ -98,7 +98,7 @@ void computeLabelPropagation(adjlist *g, STATS *s){
 
     while(node_wtht_highest_freq){
         
-        // random shuffle (Fisher-Yates)
+        // Random shuffle (Fisher-Yates)
         for(i=0; i<g->n-1; ++i){
             j = i + rand()%(g->n-i);
             temp = order[i];
@@ -111,27 +111,27 @@ void computeLabelPropagation(adjlist *g, STATS *s){
         // Set the label with the highest frequency among the neighbours
         for(i=0; i<g->n; ++i){
 
-            // le noeud sélectionné:
+            // node selected
             u = order[i];
 
-            // on s'assure que le sommet ne soit pas isolé
+            // check that it is not an isolated node
             if (g->cd[u+1]!=g->cd[u]){ 
+                // Avoid to look for the same label several times
 
-                // permet de ne pas rechercher l'occurance d'un même label plusieurs fois
-
-                // on recherche le maximum dans le voisinage
-                nb_viewed_labels = 0; // nombre de labels rencontrés
+                // Look for the max in the neighbourhood
+                // Number of labels seen
+                nb_viewed_labels = 0;
                 j = g->cd[u];
 
                 //printf("1");
                 while (j<g->cd[u+1]){
                     v = g->adj[j];
 
-                    if (nb_labels[labels[v]] == 0){ // il faut que le label ne soit pas déja vu
-                        viewed_label[nb_viewed_labels] = labels[v]; // il faut qu'on sache quels labels sont dans le voisinage
+                    if (nb_labels[labels[v]] == 0){ // Need a label not already seen
+                        viewed_label[nb_viewed_labels] = labels[v]; // check that labels are neighbours
                         ++ nb_viewed_labels;
 
-                        // on cherche d'autres labels pareils
+                        // Look for same labels
                         for (k=j; k<g->cd[u+1]; ++k){
                             if (labels[g->adj[k]] == labels[v]){
                                 ++ nb_labels[labels[v]];
@@ -148,7 +148,7 @@ void computeLabelPropagation(adjlist *g, STATS *s){
                         max_lab = lab;
                     }
 
-                    // On remet à zéro
+                    // Reset counters
                     nb_labels[lab] = 0;
                     viewed_label[k] = 0;
                 }
@@ -162,7 +162,7 @@ void computeLabelPropagation(adjlist *g, STATS *s){
         }
     }
 
-    // On note le nombre de communautés
+    // Number of communities
     mergeSort(labels, 0, g->n-1);
     s->nb_communities = 1;
     for (i=0; i<g->n-1; ++i){
