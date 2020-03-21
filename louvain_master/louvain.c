@@ -258,8 +258,29 @@ void free_adjlist(adjlist *g){
 }
 
 
+
+
 //main function
-int louvain_main(int argc,char** argv){
+void louvain_method(adjlist *g, STATS *s){
+    unsigned long *part;
+    unsigned long i;
+
+    part = malloc(g->n * sizeof(unsigned long));
+    louvainComplete(g, part);
+
+    // Number of communities
+    mergeSort(labels, 0, g->n-1);
+    s->nb_communities = 1;
+    for (i=0; i<g->n-1; ++i){
+        //printf("%lu ", labels[i]);
+        if (labels[i]<labels[i+1]){
+            ++ s->nb_communities;
+        }
+    }
+}
+
+/*
+int main(int argc,char** argv){
   adjlist* g;
   unsigned long *part;
   unsigned long i;
@@ -271,19 +292,6 @@ int louvain_main(int argc,char** argv){
   g = readadjlist(argv[1]);
   printf("Number of nodes: %lu\n", g->n);
   printf("Number of edges: %llu\n", g->e);
-
-  /*
-  //using more memory but reading the input text file only once
-  edgelist* el;
-  printf("Reading edgelist from file %s\n", argv[1]);
-  el=readedgelist(argv[1]);
-  printf("Number of nodes: %lu\n", el->n);
-  printf("Number of edges: %llu\n", el->e);
-  t1 = time(NULL);
-  printf("- Time = %ldh%ldm%lds\n", (t1-t0)/3600, ((t1-t0)%3600)/60, ((t1-t0)%60));
-  printf("Building adjacency array\n");
-  g=mkadjlist(el);
-  */
 
   t1 = time(NULL);
   printf("- Time to load the graph = %ldh%ldm%lds\n", (t1-t0)/3600, ((t1-t0)%3600)/60, ((t1-t0)%60));
@@ -307,3 +315,4 @@ int louvain_main(int argc,char** argv){
 
   return 0;
 }
+*/
