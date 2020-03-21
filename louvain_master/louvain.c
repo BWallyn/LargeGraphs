@@ -259,7 +259,7 @@ void free_adjlist(adjlist *g){
 
 
 //main function
-int main(int argc,char** argv){
+int louvain_main(int argc,char** argv){
   adjlist* g;
   unsigned long *part;
   unsigned long i;
