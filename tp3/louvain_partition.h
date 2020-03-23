@@ -1,13 +1,5 @@
-#ifndef PARTITION_H
-#define PARTITION_H
-
-#define _GNU_SOURCE
-
-#include "struct.h"
-#include <stdbool.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ifndef LOUVAIN_PARTITION_DEF
+#define LOUVAIN_PARTITION_DEF
 
 #define K 5
 

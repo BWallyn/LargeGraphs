@@ -1,11 +1,6 @@
 #ifndef LABEL_PROPAGATION
 #define LABEL_PROPAGATION
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
-
 #include "../structs/adjarray.h"
 #include "../structs/stats.h"
 

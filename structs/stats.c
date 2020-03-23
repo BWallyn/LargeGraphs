@@ -16,6 +16,7 @@ void initSTATS(STATS* s){
 	s->k_core_value = 0;
 
 	s->nb_communities = 0;
+	s->louvain_nb_communities = 0;
 }
 
 void showSTATS(STATS* s, OPTIONS* options){
@@ -43,7 +44,8 @@ void showSTATS(STATS* s, OPTIONS* options){
 	}
 
 	if (options->project == 3){
-		printf("Nombre de communautes: %d\n", s->nb_communities);
+		printf("Nombre de communautes par label propagation: %d\n", s->nb_communities);
+		printf("Nombre de communautes par louvain: %d\n", s->louvain_nb_communities);
 	}
 	
 	printf("-------------------------------------\n");

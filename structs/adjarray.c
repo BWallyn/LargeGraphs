@@ -34,6 +34,10 @@ adjlist* readedgelist(char* input){
 
 	g->edges=realloc(g->edges,g->e*sizeof(edge));
 
+	g->weights = NULL;
+    g->totalWeight = 2*g->e;
+    g->map=NULL;
+
 	return g;
 }
 
@@ -75,6 +79,8 @@ void free_adjlist(adjlist *g){
 	free(g->edges);
 	free(g->cd);
 	free(g->adj);
+	free(g->weights);
+    free(g->map);
 	free(g);
 }
 

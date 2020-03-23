@@ -4,6 +4,9 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <fcntl.h>
 
 #include "structs/adjarray.c"
 #include "structs/argparse.c"
@@ -11,6 +14,7 @@
 #include "structs/stats.c"
 #include "structs/min_heap.c"
 #include "structs/fifo.c"
+#include "structs/qsort_r.c"
 
 #include "tp1/clusters.c"
 #include "tp1/triangles.c"
@@ -21,8 +25,8 @@
 
 #include "tp3/label_propagation.c"
 #include "tp3/gen_graph.c"
-
-#include "louvain_master/louvain.c"
+#include "tp3/louvain.c"
+#include "tp3/louvain_partition.c"
 
 int main(int argc,char** argv){
 
@@ -114,8 +118,10 @@ int main(int argc,char** argv){
 
 		// Louvain method for community detection in graphs
 		printf("\nBEGIN Louvain method\n");
-
-		printf("END Louvain method\n");
+		t1 = time(NULL);
+		louvain_method(g, &s);
+		t2 = time(NULL);
+		printf("END Louvain method en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 	}
 
 	//------------ Afficchage statistiques

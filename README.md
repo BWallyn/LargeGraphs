@@ -18,3 +18,16 @@ Project 2:
 
 Project 3:
 	.\main.exe -p 3 -f "generated/graph_1.txt"
+
+
+# For louvain (Be in louvain_master)
+
+## To compile:
+
+gcc louvain.c -o louvain -O9
+
+## To execute:
+
+ .\louvain.exe "../instances/generated/graph_1.txt" "graph_1_louvain.txt"
+
+

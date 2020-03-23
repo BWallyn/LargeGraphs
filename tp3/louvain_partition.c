@@ -1,4 +1,7 @@
-#include "partition.h"
+#ifndef LOUVAIN_PARTITION
+#define LOUVAIN_PARTITION
+
+#include "louvain_partition.h"
 
 #define NLINKS2 8
 
@@ -21,7 +24,7 @@ unsigned long * mySort(unsigned long *part, unsigned long size) {
 
 
 inline long double degreeWeighted(adjlist *g, unsigned long node) {
-  unsigned long long i;
+  unsigned long i;
   if (g->weights == NULL) {
     return 1.*(g->cd[node + 1] - g->cd[node]);
   }
@@ -34,7 +37,7 @@ inline long double degreeWeighted(adjlist *g, unsigned long node) {
 }
 
 inline long double selfloopWeighted(adjlist *g, unsigned long node) {
-  unsigned long long i;
+  unsigned long i;
 
   for (i = g->cd[node]; i < g->cd[node + 1]; i++) {
     if (g->adj[i] == node) {
@@ -133,7 +136,7 @@ void neighCommunitiesInit(louvainPartition *p) {
 Computes the set of neighbor communities of a given node (excluding self-loops)
 */
 void neighCommunities(louvainPartition *p, adjlist *g, unsigned long node) {
-  unsigned long long i;
+  unsigned long i;
   unsigned long neigh, neighComm;
   long double neighW;
   p->neighCommPos[0] = p->node2Community[node];
@@ -165,7 +168,7 @@ Same behavior as neighCommunities except:
 - data structure if not reinitialised
 */
 void neighCommunitiesAll(louvainPartition *p, adjlist *g, unsigned long node) {
-  unsigned long long i;
+  unsigned long i;
   unsigned long neigh, neighComm;
   long double neighW;
 
@@ -229,10 +232,10 @@ adjlist* louvainPartition2Graph(louvainPartition *p, adjlist *g) {
 
   // Initialize meta graph
   adjlist *res = (adjlist *)malloc(sizeof(adjlist));
-  unsigned long long e1 = NLINKS2;
+  unsigned long e1 = NLINKS2;
   res->n = last - 1;
   res->e = 0;
-  res->cd = (unsigned long long *)calloc((1 + res->n), sizeof(unsigned long long));
+  res->cd = (unsigned long *)calloc((1 + res->n), sizeof(unsigned long));
   res->cd[0] = 0;
   res->adj = (unsigned long *)malloc(NLINKS2 * sizeof(unsigned long));
   res->totalWeight = 0.0L;
@@ -402,7 +405,7 @@ unsigned long louvain(adjlist *g, unsigned long *lab) {
 unsigned long louvainComplete(adjlist *g, unsigned long *lab) {
   adjlist *init = g, *g2;
   unsigned long n, i;
-  unsigned long long j;
+  unsigned long j;
   unsigned long originalSize = g->n;
   long double improvement;
   // Initialize partition with trivial communities
@@ -440,3 +443,4 @@ unsigned long louvainComplete(adjlist *g, unsigned long *lab) {
   return n;
 }
 
+#endif

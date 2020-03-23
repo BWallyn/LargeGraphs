@@ -17,6 +17,7 @@ typedef struct
 
 	//tp3
 	long int nb_communities;
+	long int louvain_nb_communities;
 } STATS;
 
 void initSTATS(STATS *s);

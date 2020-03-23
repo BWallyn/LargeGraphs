@@ -25,7 +25,6 @@ void load_options(OPTIONS *options, int argc, char** argv){
                 options->project = atoi(optarg);
                 break;  
             case 'f':  
-                printf("\tInput file: %s\n", optarg); 
                 inputFile = optarg; 
                 break;  
             case 'a':  
@@ -58,7 +57,9 @@ void load_options(OPTIONS *options, int argc, char** argv){
     strcpy(options->inputFile, "instances/");
     strcat(options->inputFile, inputFile);
 
-    printf("\tFichier de resultat: %s\n", options->resultPkFile); 
+    printf("\tFichier d'entree: %s\n", options->inputFile); 
+    printf("\tFichier de resultat PageRank: %s\n", options->resultPkFile); 
+    printf("\tFichier de resultat KCore: %s\n", options->resultKCoreFile);
 
     printf("FIN Lecture des options\n");
 };

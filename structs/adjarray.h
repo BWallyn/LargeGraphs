@@ -14,6 +14,9 @@ typedef struct {
 	unsigned long *cd;//cumulative degree cd[0]=0 length=n+1
 	unsigned long *adj;//concatenated lists of neighbors of all nodes
 	unsigned long *outD;
+	long double *weights;
+    long double totalWeight;
+    unsigned long *map;
 } adjlist;
 
 inline unsigned long max3(unsigned long a,unsigned long b,unsigned long c);
