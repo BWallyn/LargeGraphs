@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <time.h>
+#include <sys/time.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -104,24 +105,26 @@ int main(int argc,char** argv){
 		double p=0.4;
 		double q=0.01;
 		char* input="instances/generated/graph_1.txt";
-		printf("\nBEGIN Generate graph\n");
-		t1 = time(NULL);
-		generate_graph(n_nodes, p, q, input);
-		t2 = time(NULL);
-		printf("END Generate graph in %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		struct timeval stop, start;
 
-		printf("\nDEBUT Label propagation\n");
-		t1 = time(NULL);
+		printf("\nBEGIN Generate graph\n");
+		gettimeofday(&start, NULL);
+		generate_graph(n_nodes, p, q, input);
+		gettimeofday(&stop, NULL);
+		printf("END Generate graph in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
+
+		printf("\nBEGIN Label propagation\n");
+		gettimeofday(&start, NULL);
 		computeLabelPropagation(g, &s);
-		t2 = time(NULL);
-		printf("FIN Label propagation en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END Label propagation in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
 		// Louvain method for community detection in graphs
 		printf("\nBEGIN Louvain method\n");
-		t1 = time(NULL);
+		gettimeofday(&start, NULL);
 		louvain_method(g, &s);
-		t2 = time(NULL);
-		printf("END Louvain method en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END Louvain method in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 	}
 
 	//------------ Afficchage statistiques
