@@ -28,7 +28,7 @@ void generate_graph(unsigned long n_nodes, double p, double q, char* input){
 
     for(i=0; i<n_nodes; ++i){
         
-        for(u=0; u<n_nodes; ++u){
+        for(u=i+1; u<n_nodes; ++u){
 
             if (u==i){
                 continue;
@@ -36,12 +36,12 @@ void generate_graph(unsigned long n_nodes, double p, double q, char* input){
 
             // Nodes in the same cluster
             if(i/100==u/100){
-                if (rand() % 100 <= p*100){
+                if (rand() % 100 < p*100){
                     fprintf(fptr, "%lu %lu\n", i, u);
                 }
             }
             else {
-                if(rand() % 100 <= q*100){
+                if(rand() % 100 < q*100){
                     fprintf(fptr, "%lu %lu\n", i, u);
                 }
             }
