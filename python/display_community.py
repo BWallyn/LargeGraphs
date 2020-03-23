@@ -20,8 +20,8 @@ def display_community(input_file):
 	df = pd.read_csv(input_file, float_precision='round_trip')
 	plt.figure(num=1)
 	sns.relplot(x="q", y="number_community",
-				hue="method",
-				#size="p", size_norm=(),
+				hue="p",
+				size="running_time", #size_norm=(),
 				palette="muted",
 				col="method",
 				data=df)
