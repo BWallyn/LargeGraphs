@@ -43,13 +43,24 @@ int main(int argc,char** argv){
 	if (options.project == 3){
 		double p=0.4;
 		double q=0.01;
-		char* input="instances/generated/graph_1.txt";
+		char* input="instances\\generated\\graph_1.txt";
 		unsigned long n_nodes=400;
 
 		printf("\nBEGIN Generate graph\n");
 		printf("\tOptions: p = %lf and q = %lf\n", p, q);
 		gettimeofday(&start, NULL);
 		generate_graph(n_nodes, p, q, input);
+	
+		// Génération d'un graph avec la routine LFR
+		char cmdbuf[100];
+		long int LFR_nb_nodes = 1000;
+		char *LFR_file_name = "instances\\generated\\LFR_graph";
+		printf("\tOptions LFR: N = %d\n", LFR_nb_nodes);
+		snprintf(cmdbuf, sizeof(cmdbuf), "lfr.exe -N %d -name \"%s\" -on 0 -k 6 -maxk 80 -muw 0 -minc 100", 
+											LFR_nb_nodes,LFR_file_name);
+		int retcode = system(cmdbuf);
+		printf("\tCode de sortie LFR: %d\n", retcode);
+
 		gettimeofday(&stop, NULL);
 		printf("END Generate graph in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 	}
