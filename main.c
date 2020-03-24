@@ -37,6 +37,22 @@ int main(int argc,char** argv){
 
 	adjlist* g;
 	time_t t1,t2;
+	struct timeval stop, start;
+
+	//---------- GENERATION GRAPH
+	if (options.project == 3){
+		double p=0.4;
+		double q=0.01;
+		char* input="instances/generated/graph_1.txt";
+		unsigned long n_nodes=400;
+
+		printf("\nBEGIN Generate graph\n");
+		printf("\tOptions: p = %lf and q = %lf\n", p, q);
+		gettimeofday(&start, NULL);
+		generate_graph(n_nodes, p, q, input);
+		gettimeofday(&stop, NULL);
+		printf("END Generate graph in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
+	}
 
 	//---------- CHARGEMENT GRAPHE
 	printf("\nDEBUT Lecture graphe\n");
@@ -101,18 +117,7 @@ int main(int argc,char** argv){
 
 	//====================== PROJET 3 ======================
 	if (options.project == 3){
-		unsigned long n_nodes=400;
-		double p=0.25;
-		double q=0.25;
-		char* input="instances/generated/graph_1.txt";
-		struct timeval stop, start;
-
-		printf("\nBEGIN Generate graph\n");
-		gettimeofday(&start, NULL);
-		generate_graph(n_nodes, p, q, input);
-		gettimeofday(&stop, NULL);
-		printf("END Generate graph in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
-
+		// Label propagation method for community detection in graphs
 		printf("\nBEGIN Label propagation\n");
 		gettimeofday(&start, NULL);
 		computeLabelPropagation(g, &s);
