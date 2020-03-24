@@ -17,17 +17,14 @@ Project 2:
 	.\main.exe -p 2 -f "net.txt" -a 0.15
 
 Project 3:
-	.\main.exe -p 3 -f "generated/graph_1.txt"
+	.\main.exe -p 3 -f "graph_1.txt" -b h
+	.\main.exe -p 3 -f "LFR_graph.nse" -b h
 
 
-# For louvain (Be in louvain_master)
+# For LFR 
 
 ## To compile:
 
-gcc louvain.c -o louvain -O9
-
-## To execute:
-
- .\louvain.exe "../instances/generated/graph_1.txt" "graph_1_louvain.txt"
+ g++ -O3 -o lfr LFR/Sources/benchm.cpp
 
 

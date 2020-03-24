@@ -5,7 +5,7 @@
 #include "../structs/stats.h"
 
 
-void computeLabelPropagation(adjlist *g, STATS *s){
+void computeLabelPropagation(adjlist *g, STATS *s, char* result_file){
 
     unsigned long i, j, k, u, v, temp, nb_viewed_labels, lab;
     unsigned long maximum, max_lab;
@@ -95,6 +95,14 @@ void computeLabelPropagation(adjlist *g, STATS *s){
             }
         }
     }
+
+    // on enregistre les résultats dans un fichier
+    FILE * fp;
+    fp = fopen (result_file,"w");
+    for (u=0; u<g->n; ++u){
+        fprintf(fp, "%lu\t%lu\n", u, labels[u]);
+    }
+    fclose (fp);
 
     // Number of communities
     mergeSort(labels, 0, g->n-1);

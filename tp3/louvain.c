@@ -46,13 +46,21 @@ read_two_integers(int fd, unsigned long *u, unsigned long *v) {
   } 
 }
 
-void louvain_method(adjlist *g, STATS *s){
+void louvain_method(adjlist *g, STATS *s, char* result_file){
   if (g->n > 1){
     unsigned long *labels;
-    unsigned long i;
+    unsigned long i, u;
 
     labels = malloc(g->n * sizeof(unsigned long));
     louvainComplete(g, labels);
+
+    // on enregistre les résultats dans un fichier
+    FILE * fp;
+    fp = fopen (result_file,"w");
+    for (u=0; u<g->n; ++u){
+      fprintf(fp, "%lu\t%lu\n", u, labels[u]);
+    }
+    fclose (fp);
 
     // Number of communities
     mergeSort(labels, 0, g->n-1);

@@ -41,25 +41,29 @@ int main(int argc,char** argv){
 
 	//---------- GENERATION GRAPH
 	if (options.project == 3){
-		double p=0.4;
-		double q=0.01;
-		char* input="instances\\generated\\graph_1.txt";
-		unsigned long n_nodes=400;
-
 		printf("\nBEGIN Generate graph\n");
-		printf("\tOptions: p = %lf and q = %lf\n", p, q);
-		gettimeofday(&start, NULL);
-		generate_graph(n_nodes, p, q, input);
+		if (options.benchmark == 'h'){
+			double p=0.4;
+			double q=0.01;
+			char* input="instances\\graph_1.txt";
+			unsigned long n_nodes=400;
+
+			printf("\tOptions: p = %lf and q = %lf\n", p, q);
+			gettimeofday(&start, NULL);
+			generate_graph(n_nodes, p, q, input);
+		}
 	
-		// Génération d'un graph avec la routine LFR
-		char cmdbuf[100];
-		long int LFR_nb_nodes = 1000;
-		char *LFR_file_name = "instances\\generated\\LFR_graph";
-		printf("\tOptions LFR: N = %d\n", LFR_nb_nodes);
-		snprintf(cmdbuf, sizeof(cmdbuf), "lfr.exe -N %d -name \"%s\" -on 0 -k 6 -maxk 80 -muw 0 -minc 100", 
-											LFR_nb_nodes,LFR_file_name);
-		int retcode = system(cmdbuf);
-		printf("\tCode de sortie LFR: %d\n", retcode);
+		else if (options.benchmark == 'l') {
+			// Génération d'un graph avec la routine LFR
+			char cmdbuf[100];
+			long int LFR_nb_nodes = 50000;
+			char *LFR_file_name = "instances\\LFR_graph";
+			printf("\tOptions LFR: N = %d\n", LFR_nb_nodes);
+			snprintf(cmdbuf, sizeof(cmdbuf), "lfr.exe -N %d -name \"%s_%d\" -on 0 -k 6 -maxk 80 -muw 0 -minc 100 -maxc 100", 
+												LFR_nb_nodes, LFR_file_name, LFR_nb_nodes);
+			int retcode = system(cmdbuf);
+			printf("\tCode de sortie LFR: %d\n", retcode);
+		}
 
 		gettimeofday(&stop, NULL);
 		printf("END Generate graph in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
@@ -131,14 +135,14 @@ int main(int argc,char** argv){
 		// Label propagation method for community detection in graphs
 		printf("\nBEGIN Label propagation\n");
 		gettimeofday(&start, NULL);
-		computeLabelPropagation(g, &s);
+		computeLabelPropagation(g, &s, options.resultLabelFile);
 		gettimeofday(&stop, NULL);
 		printf("END Label propagation in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
 		// Louvain method for community detection in graphs
 		printf("\nBEGIN Louvain method\n");
 		gettimeofday(&start, NULL);
-		louvain_method(g, &s);
+		louvain_method(g, &s, options.resultLouvainFile);
 		gettimeofday(&stop, NULL);
 		printf("END Louvain method in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 	}
