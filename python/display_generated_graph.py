@@ -44,6 +44,6 @@ def display_generated_graph(input_file):
 
 if __name__ == '__main__':
 
-	INPUT_FILE = os.path.join(os.path.dirname(__file__), os.pardir, "instances", "generated", "graph_1.txt")
+	INPUT_FILE = os.path.join(os.path.dirname(__file__), os.pardir, "instances", "graph_1.txt")
 	print(INPUT_FILE)
 	display_generated_graph(input_file=INPUT_FILE)
