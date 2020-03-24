@@ -41,8 +41,8 @@ int main(int argc,char** argv){
 
 	//---------- GENERATION GRAPH
 	if (options.project == 3){
-		double p=0.4;
-		double q=0.01;
+		double p=0.3;
+		double q=0.3;
 		char* input="instances/generated/graph_1.txt";
 		unsigned long n_nodes=400;
 
