@@ -18,17 +18,22 @@ def display_generated_graph(input_file):
 
 	intify = lambda L: [int(l) for l in L]
 	edges = [intify(l.replace("\n", "").split(" ")) for l in open(input_file).readlines()]
-	max_node = edges[-1][0]+1
+	max_node = 400
 
 	G = nx.Graph()
 	G.add_nodes_from(range(max_node))
 	G.add_edges_from(edges)
 
+	pos = {}
+	for i in range(max_node):
+		pos[i] = ((i%100)%10+10*((i//100)//2), (i%100)//10+10*((i//100)%2))
+
+
 	cmap = plt.get_cmap('tab20')
 	colors = [cmap(i) for i in np.linspace(0, 1, max_node//100)]
-	pos = nx.spring_layout(G)
+	#pos = nx.spring_layout(G)
 	for c in range(max_node//100):
-		nx.draw_networkx_nodes(G, pos=pos, node_color=[colors[c]], nodelist=range(c*100, (c+1)*100), node_size=100)
+		nx.draw_networkx_nodes(G, pos=pos, node_color=[colors[c]], nodelist=range(c*100, (c+1)*100), node_size=50)
 	nx.draw_networkx_edges(G, pos=pos)
 	plt.show()
 

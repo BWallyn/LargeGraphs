@@ -18,12 +18,15 @@ void computePageRank(adjlist* g, STATS *s, double alpha, int t, char* result_fil
 	for (k=1; k<=t; ++k){
 
 		for (i=0; i<g->e; ++i){
-			if (g->outD[g->edges[i].s] > 0){
+			if (g->outD[g->edges[i].s] > 0.1){
 				P_next[g->edges[i].t] += P_prev[g->edges[i].s]/g->outD[g->edges[i].s];
+			}
+			else{
+				P_next[g->edges[i].s] += P_prev[g->edges[i].t]/g->n;
 			}
 		}
 		for (u=0; u<g->n; ++u){
-			norm += P_next[u]*P_next[u];
+			norm += P_next[u];
 
 			// On rajoute une partie de l'identité
 			P_next[u] = (1-alpha)*P_next[u]+alpha/g->n;
@@ -31,7 +34,7 @@ void computePageRank(adjlist* g, STATS *s, double alpha, int t, char* result_fil
 
 		for (u=0; u<g->n; ++u){
 			// On rescale
-			P_next[u] /= sqrt(norm);
+			P_next[u] += (1-norm)/g->n;
 			
 			// On passe à l'itérée suivante
 			P_prev[u] = P_next[u];
@@ -84,7 +87,7 @@ void computePageRank(adjlist* g, STATS *s, double alpha, int t, char* result_fil
    	fp = fopen (result_file,"w");
    	for (u=0; u<g->n; ++u){
    		if (g->cd[u+1]!=g->cd[u]){
-   			fprintf(fp, "%lu\t%.7f\t%d\t%d\n", u, P_prev[u], g->cd[u+1]-g->cd[u]-g->outD[u], g->outD[u]);
+   			fprintf(fp, "%lu\t%.9f\t%d\t%d\n", u, P_prev[u], g->cd[u+1]-g->cd[u]-g->outD[u], g->outD[u]);
    		}
    	}
     fclose (fp);

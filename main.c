@@ -93,7 +93,7 @@ int main(int argc,char** argv){
 
 		printf("\nDEBUT Page Rank\n");
 		t1 = time(NULL);
-		computePageRank(g, &s, 0.15, 10, options.resultPkFile);
+		computePageRank(g, &s, options.alpha, 30, options.resultPkFile);
 		t2 = time(NULL);
 		printf("FIN Page Rank en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 

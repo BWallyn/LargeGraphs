@@ -11,8 +11,10 @@ void load_options(OPTIONS *options, int argc, char** argv){
     char *str_alpha = "0.15";
     char *inputFile = "none";
     char *dicFile = "none";
+    options->p = 0.4;
+    options->q = 0.01;
     
-    while((opt = getopt(argc, argv, ":a:f:p:d:")) != -1)  
+    while((opt = getopt(argc, argv, ":a:f:p:d:q:")) != -1)  
     {  
         switch(opt)  
         {  
@@ -32,6 +34,10 @@ void load_options(OPTIONS *options, int argc, char** argv){
                 options->alpha = (double) strtod(optarg,NULL);
                 str_alpha = optarg;
                 break;  
+            case 'q':  
+                printf("\tq: %s\n", optarg); 
+                options->q = (double) strtod(optarg,NULL);
+                break;
             case ':':  
                 printf("\tOption needs a value\n");  
                 break;  
