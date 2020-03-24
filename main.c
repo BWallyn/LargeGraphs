@@ -102,8 +102,8 @@ int main(int argc,char** argv){
 	//====================== PROJET 3 ======================
 	if (options.project == 3){
 		unsigned long n_nodes=400;
-		double p=0.4;
-		double q=0.01;
+		double p=0.25;
+		double q=0.25;
 		char* input="instances/generated/graph_1.txt";
 		struct timeval stop, start;
 
