@@ -47,6 +47,7 @@ read_two_integers(int fd, unsigned long *u, unsigned long *v) {
 }
 
 void louvain_method(adjlist *g, STATS *s){
+  if (g->n > 1){
     unsigned long *labels;
     unsigned long i;
 
@@ -62,6 +63,7 @@ void louvain_method(adjlist *g, STATS *s){
             ++ s->louvain_nb_communities;
         }
     }
+  }
 }
 
 /*int main(int argc,char** argv){
