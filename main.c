@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <math.h>
-#include <time.h>
+//#include <time.h>
 #include <sys/time.h>
 #include <string.h>
 #include <stdbool.h>
@@ -36,7 +36,6 @@ int main(int argc,char** argv){
 	load_options(&options, argc, argv);
 
 	adjlist* g;
-	time_t t1,t2;
 	struct timeval stop, start;
 
 	//---------- GENERATION GRAPH
@@ -70,20 +69,20 @@ int main(int argc,char** argv){
 	}
 
 	//---------- CHARGEMENT GRAPHE
-	printf("\nDEBUT Lecture graphe\n");
-	t1=time(NULL);
+	printf("\nBEGIN Read graph\n");
+	gettimeofday(&start, NULL);
 
-	printf("\tLecture du fichier %s\n",options.inputFile);
+	printf("\tRead file %s\n",options.inputFile);
 	g=readedgelist(options.inputFile);
 
-	printf("\tNombre de sommets: %lu\n",g->n);
-	printf("\tNombre d'aretes: %lu\n",g->e);
+	printf("\tNumber of nodes: %lu\n",g->n);
+	printf("\tNumber of edges: %lu\n",g->e);
 
-	printf("\tConstruction de la liste d'adjacence ...\n");
+	printf("\tBuilding the adjacency list ...\n");
 	mkadjlist(g);
 
-	t2=time(NULL);
-	printf("FIN Lecture graphe en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+	gettimeofday(&stop, NULL);
+	printf("END Read graph in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
 
 	STATS s;
@@ -91,23 +90,23 @@ int main(int argc,char** argv){
 	//====================== PROJET 1 ======================
 
 	if (options.project == 1){
-		printf("\nDEBUT Calcul des clusters\n");
-		t1 = time(NULL);
+		printf("\nBEGIN Compute clusters\n");
+		gettimeofday(&start, NULL);
 		findClusters(g, &s);
-		t2 = time(NULL);
-		printf("FIN Calcul des clusters en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END Compute clusters in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
-		printf("\nDEBUT Calcul du diametre\n");
-		t1 = time(NULL);
+		printf("\nBEGIN Compute diameter\n");
+		gettimeofday(&start, NULL);
 		findDiameter(g, &s);
-		t2 = time(NULL);
-		printf("FIN Calcul du diametre en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END Compute diameter in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
-		printf("\nDEBUT Calcul des triangles\n");
-		t1 = time(NULL);
+		printf("\nBEGIN Compute triangles\n");
+		gettimeofday(&start, NULL);
 		findTriangles(g, &s);
-		t2 = time(NULL);
-		printf("FIN Calcul des triangles en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END Compute triangles in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 	}
 
 	//====================== PROJET 2 ======================
@@ -116,17 +115,17 @@ int main(int argc,char** argv){
 		//printf("%s\n", getName(options.dicFile, 13832572));
 		//printf("\nFIN Lecture nom pages\n");
 
-		printf("\nDEBUT K core decomposition\n");
-		t1 = time(NULL);
+		printf("\nBEGIN K core decomposition\n");
+		gettimeofday(&start, NULL);
 		computeKCore(g, &s, options.resultKCoreFile);
-		t2 = time(NULL);
-		printf("FIN K core decomposition en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END K core decomposition in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
-		printf("\nDEBUT Page Rank\n");
-		t1 = time(NULL);
+		printf("\nBEGIN Page Rank\n");
+		gettimeofday(&start, NULL);
 		computePageRank(g, &s, options.alpha, 30, options.resultPkFile);
-		t2 = time(NULL);
-		printf("FIN Page Rank en %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+		gettimeofday(&stop, NULL);
+		printf("END Page Rank in %lu us\n",(stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec);
 
 	}
 
