@@ -36,11 +36,11 @@ def display_community(input_file):
 	# Heatmap
 	result_label = df[df["method"] == 'Label'].pivot(index="p", columns="q", values="number_community")
 	fig_lab, ax_lab = plt.subplots()
-	ax_lab = sns.heatmap(result_label)
+	ax_lab = sns.heatmap(result_label, vmin=1, vmax=10, center=4, cmap="YlGnBu")
 
 	result_louvain = df[df["method"] == 'Louvain'].pivot(index="p", columns="q", values="number_community")
 	fig_lou, ax_lou = plt.subplots()
-	ax_lou = sns.heatmap(result_louvain)
+	ax_lou = sns.heatmap(result_louvain, vmin=1, vmax=10, center=4, cmap="YlGnBu")
 	plt.show()
 
 def compute_coverage(graph_file, partition_file, zero=False):
@@ -81,8 +81,8 @@ def compute_coverage(graph_file, partition_file, zero=False):
 if __name__ == '__main__':
 
 	INPUT_FILE = os.path.join(os.path.dirname(__file__), os.pardir, "results", "interm", "community_detection.csv")
-	#print(INPUT_FILE)
-	#display_community(input_file=INPUT_FILE)
+	print(INPUT_FILE)
+	display_community(input_file=INPUT_FILE)
 	INPUT_FILE = os.path.join(os.path.dirname(__file__), os.pardir, "instances", "LFR_graph")
 	LABEL_RESULT_FILE = os.path.join(os.path.dirname(__file__), os.pardir, "results", "label_LFR_graph")
 	LOUVAIN_RESULT_FILE = os.path.join(os.path.dirname(__file__), os.pardir, "results", "louvain_LFR_graph")
