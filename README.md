@@ -1,4 +1,6 @@
-# README
+# Large Graph Project
+
+_Work done by Quentin Jacquet and Benjamin Wallyn_
 
 ## To compile:
 
@@ -21,9 +23,11 @@ Project 3:
 * .\main.exe -p 3 -f "LFR_graph.nse" -b h
 
 
-# For LFR 
+## For LFR 
 
-## To compile:
+Actually, only working for Windows users. Need to make some changes for Linux users
+
+### To compile:
 
  g++ -O3 -o lfr LFR/Sources/benchm.cpp
 
